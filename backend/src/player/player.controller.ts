@@ -19,12 +19,8 @@ export class PlayerController {
     }
     return this.playerService.getPlayers(skip, take);
   }
-  //   @Get(':name')
-  //   getOne(@Param('name') name: string) {
-  //     spid.find(async (player) => {
-  //       if (player.name.includes(name)) {
-  //       }
-  //     });
-  //     return;
-  //   }
+  @Get(':name')
+  getOne(@Param('name') name: string) {
+    return this.playerService.getPlayer(name);
+  }
 }

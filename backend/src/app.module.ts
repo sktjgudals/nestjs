@@ -4,7 +4,12 @@ import { PlayerController } from './player/player.controller';
 import { HttpModule } from '@nestjs/axios';
 import { PlayerService } from './player/player.service';
 @Module({
-  imports: [HttpModule],
+  imports: [
+    HttpModule.register({
+      timeout: 5000,
+      maxRedirects: 5,
+    }),
+  ],
   controllers: [UserController, PlayerController],
   providers: [PlayerService],
 })
