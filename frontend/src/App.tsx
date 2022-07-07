@@ -18,7 +18,7 @@ const App: React.FC = () => {
         setToDos([...toDos, { id, toDo: toDo, isDone }]);
         setToDo("");
       } else {
-        return console.warn("api보내기 실패");
+        return console.warn("api 보내기 실패");
       }
     }
   };

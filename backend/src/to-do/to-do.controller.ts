@@ -25,7 +25,7 @@ export class ToDoController {
     @Body() body: ToDoData,
     @Res() res: Response,
   ) {
-    console.log(body.description, body.isDone);
+    console.log(id, body.description, body.isDone);
     return res.status(200).json(true);
   }
 }
