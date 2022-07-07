@@ -1,6 +1,5 @@
 import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { VirtualTimeScheduler } from 'rxjs';
 
 import { Player } from './entities.ts/player.entitity';
 import { PlayerService } from './player.service';
