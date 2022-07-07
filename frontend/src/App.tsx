@@ -3,39 +3,23 @@ import "./App.css";
 import InputFeild from "./components/InputFeild";
 import ToDoList from "./components/ToDoList";
 import { ToDo } from "./model";
-
-// let name: string;
-// let role: [number, string];
-// let printName: (name: string) => void;
-// let personName: unknown;
-// interface Person {
-//   name: string;
-//   age?: number;
-// }
-// interface Guy extends Person {
-//   profession: string;
-// }
-// type X = {
-//   a: string;
-//   b: number;
-// }
-// type Y = X & {
-//   c: string;
-//   d: number;
-// }
-// let y: Y = {
-//   c: "ef",
-//   d: 42
-// }
+import { addApi } from "./api/add";
 
 const App: React.FC = () => {
   const [toDo, setToDo] = useState<string>("");
   const [toDos, setToDos] = useState<ToDo[]>([]);
-  const handleAdd = (e: React.FormEvent) => {
+  const id = Date.now();
+  const isDone = false;
+  const handleAdd = async (e: React.FormEvent) => {
     e.preventDefault();
     if (toDo) {
-      setToDos([...toDos, { id: Date.now(), toDo: toDo, isDone: false }]);
-      setToDo("");
+      const res = await addApi(id, toDo, isDone);
+      if (res) {
+        setToDos([...toDos, { id, toDo: toDo, isDone }]);
+        setToDo("");
+      } else {
+        return console.warn("api보내기 실패");
+      }
     }
   };
   return (
