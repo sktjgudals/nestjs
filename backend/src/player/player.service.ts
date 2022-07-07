@@ -1,9 +1,12 @@
-import { ConsoleLogger, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Player } from './entities.ts/player.entitity';
 import players from '../json/spid.json';
 import { HttpService } from '@nestjs/axios';
 
-async function findPlayer(players: Player[], name: string) {
+async function findPlayer<T>(
+  players: Player[],
+  name: string,
+): Promise<Player[]> {
   let arr: Player[] = new Array();
   players.find((player) => {
     if (player.name.includes(name)) {
@@ -28,7 +31,7 @@ export class PlayerService {
       Authorization:
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50X2lkIjoiNTUzNjU2MzQyIiwiYXV0aF9pZCI6IjIiLCJ0b2tlbl90eXBlIjoiQWNjZXNzVG9rZW4iLCJzZXJ2aWNlX2lkIjoiNDMwMDExNDgxIiwiWC1BcHAtUmF0ZS1MaW1pdCI6IjUwMDoxMCIsIm5iZiI6MTY1NjkyODE0OSwiZXhwIjoxNjcyNDgwMTQ5LCJpYXQiOjE2NTY5MjgxNDl9.Pd13AbrTwhdMgGgJMBnyp8ZuMlIlKP-GDL9Dw8l2bYk',
     };
-    const res: Player[] = await findPlayer(this.players, name);
+    const res: Player[] = await findPlayer<Player[]>(this.players, name);
     for (let i = 0; i < res.length; i++) {}
     const result = await this.httpService
       .post(
