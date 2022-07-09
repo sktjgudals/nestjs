@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { List, Prisma } from '@prisma/client';
 import { ToDoList } from './entities.ts/to-do.entitity';
 @Injectable()
 export class ToDoService {
@@ -13,7 +12,7 @@ export class ToDoService {
       if (create) return create;
       else return { id: 0, description: body, isDone };
     } catch (e) {
-      if (e) return { description: body, isDone };
+      if (e) return { id: 0, description: body, isDone };
     }
   }
 }
