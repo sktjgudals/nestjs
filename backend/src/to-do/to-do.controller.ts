@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Request, Response } from 'express';
-import { ToDoData } from './entities.ts/to-do.entitity';
+import { ToDoList } from './entities.ts/to-do.entitity';
 import { ToDoService } from './to-do.service';
 
 @Controller('to-do')
@@ -24,7 +24,7 @@ export class ToDoController {
   @Post(':id')
   addToDo(
     @Param('id') id: string,
-    @Body() body: ToDoData,
+    @Body() body: ToDoList,
     @Res() res: Response,
   ) {
     this.toDoService.addToDo(id, body.description, body.isDone);

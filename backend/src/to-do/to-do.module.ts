@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { ToDoService } from './to-do.service';
 import { ToDoController } from './to-do.controller';
-import { ToDoDatatbase } from './entities.ts/to-do.entitity';
+import { PrismaService } from 'src/prisma.service';
+
 @Module({
-  imports: [TypeOrmModule.forFeature([ToDoDatatbase])],
+  imports: [],
   providers: [ToDoService],
   controllers: [ToDoController],
 })

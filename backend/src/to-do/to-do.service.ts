@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
-import { DataSource, Repository } from 'typeorm';
-import {} from './entities.ts/to-do.entitity';
-
+import { PrismaService } from '../prisma.service';
+import { List, Prisma } from '@prisma/client';
 @Injectable()
 export class ToDoService {
-  constructor(private dataSource: DataSource) {}
+  constructor(private prisma: PrismaService) {}
   async addToDo(id, body, isDone): Promise<any> {
     console.log(id, body);
-
+    // const res = await this.prisma.list.findMany({});
+    // console.log(res);
     return true;
   }
 }
