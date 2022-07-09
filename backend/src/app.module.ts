@@ -6,25 +6,22 @@ import { HttpModule } from '@nestjs/axios';
 import { PlayerService } from './player/player.service';
 import { ToDoController } from './to-do/to-do.controller';
 import { ToDoService } from './to-do/to-do.service';
-import { ToDoDatatbase } from './to-do/entities.ts/to-do.entitity';
 import { ToDoModule } from './to-do/to-do.module';
+import { ConfigModule } from '@nestjs/config';
+import { MariaConfigModule } from './config/database/config.module';
+import { MariaConfigService } from './config/database/config.service';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({ isGlobal: true }),
     HttpModule.register({
       timeout: 5000,
       maxRedirects: 5,
     }),
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: 'localhost',
-      port: 3316,
-      username: 'root',
-      password: 'asdf',
-      database: 'test',
-      entities: [ToDoDatatbase],
-      synchronize: true,
-      autoLoadEntities: true,
+    TypeOrmModule.forRootAsync({
+      imports: [MariaConfigModule],
+      useClass: MariaConfigService,
+      inject: [MariaConfigService],
     }),
     ToDoModule,
   ],
