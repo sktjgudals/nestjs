@@ -17,10 +17,12 @@ import { ToDoService } from './to-do.service';
 @ApiTags('To-Do API')
 export class ToDoController {
   constructor(private readonly toDoService: ToDoService) {}
+
   @Get('')
-  getToDos() {
-    return 'hi';
+  async getToDos(@Res() res: Response) {
+    return res.status(200).json(await this.toDoService.getToDoAll());
   }
+
   @Post('')
   async addToDo(@Body() body: ToDoList, @Res() res: Response) {
     return res
