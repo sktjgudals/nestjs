@@ -1,10 +1,9 @@
 import { Module } from '@nestjs/common';
 import { ToDoService } from './to-do.service';
 import { ToDoController } from './to-do.controller';
-import { PrismaService } from 'src/prisma.service';
-
+import { PrismaModule } from 'src/prisma/prisma.module';
 @Module({
-  imports: [],
+  imports: [PrismaModule],
   providers: [ToDoService],
   controllers: [ToDoController],
 })
