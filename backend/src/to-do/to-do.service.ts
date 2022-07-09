@@ -1,13 +1,19 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { List, Prisma } from '@prisma/client';
+import { ToDoList } from './entities.ts/to-do.entitity';
 @Injectable()
 export class ToDoService {
   constructor(private prisma: PrismaService) {}
-  async addToDo(id, body, isDone): Promise<any> {
-    console.log(id, body);
-    const res = await this.prisma.list.findMany({});
-    console.log(res);
-    return true;
+  async addToDo(body, isDone): Promise<ToDoList> {
+    try {
+      const create = await this.prisma.list.create({
+        data: { description: body, isDone: isDone },
+      });
+      if (create) return create;
+      else return { id: 0, description: body, isDone };
+    } catch (e) {
+      if (e) return { description: body, isDone };
+    }
   }
 }

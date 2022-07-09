@@ -21,13 +21,10 @@ export class ToDoController {
   getToDos() {
     return 'hi';
   }
-  @Post(':id')
-  addToDo(
-    @Param('id') id: string,
-    @Body() body: ToDoList,
-    @Res() res: Response,
-  ) {
-    this.toDoService.addToDo(id, body.description, body.isDone);
-    return res.status(200).json(true);
+  @Post('')
+  async addToDo(@Body() body: ToDoList, @Res() res: Response) {
+    return res
+      .status(200)
+      .json(await this.toDoService.addToDo(body.description, body.isDone));
   }
 }

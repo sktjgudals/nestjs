@@ -1,10 +1,9 @@
 export const addApi = async (
-  id: number,
   toDo: string,
   isDone: boolean
-): Promise<boolean> => {
+): Promise<number> => {
   try {
-    const url = `http://localhost:4000/to-do/${id}`;
+    const url = `http://localhost:4000/to-do/`;
     const urlOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -12,10 +11,10 @@ export const addApi = async (
     };
     const res = await fetch(url, urlOptions);
     const result = await res.json();
-    if (result) return true;
-    else return false;
+    if (result) return result.id;
+    else return 0;
   } catch (e) {
-    if (e) return false;
+    if (e) return 0;
   }
-  return false;
+  return 0;
 };

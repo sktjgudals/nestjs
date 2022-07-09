@@ -8,14 +8,13 @@ import { addApi } from "./api/add";
 const App: React.FC = () => {
   const [toDo, setToDo] = useState<string>("");
   const [toDos, setToDos] = useState<ToDo[]>([]);
-  const id = Date.now();
   const isDone = false;
   const handleAdd = async (e: React.FormEvent) => {
     e.preventDefault();
     if (toDo) {
-      const res = await addApi(id, toDo, isDone);
-      if (res) {
-        setToDos([...toDos, { id, toDo: toDo, isDone }]);
+      const res = await addApi(toDo, isDone);
+      if (res !== 0) {
+        setToDos([...toDos, { id: res, toDo: toDo, isDone }]);
         setToDo("");
       } else {
         return console.warn("api 보내기 실패");

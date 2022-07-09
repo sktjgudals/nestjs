@@ -1,6 +1,6 @@
 export interface ToDoList {
-  id: number;
+  id?: number;
   description: string;
   isDone: boolean;
-  createdAt: Date;
+  createdAt?: Date;
 }
