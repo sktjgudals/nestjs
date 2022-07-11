@@ -1,16 +1,38 @@
-export const getApi = async (): Promise<any[]> => {
-  try {
-    const url = `http://localhost:4000/to-do/`;
-    const urlOptions = {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    };
-    const res = await fetch(url, urlOptions);
-    const result = await res.json();
-    if (result) return result;
-    else return [];
-  } catch (e) {
-    if (e) return [];
+const cache = new Map();
+
+export const useFetchAsync = (url: string) => {
+  const state = cache.get(url);
+  switch (state?.status) {
+    case undefined: {
+      const promise = new Promise((resolve, reject) => {
+        fetch(url)
+          .then((res) => res.json())
+          .then((data) => {
+            cache.set(url, {
+              status: "ready",
+              data,
+            });
+            resolve(url);
+          })
+          .catch((error) => {
+            cache.set(url, {
+              status: "errored",
+              error,
+            });
+            reject(error);
+          });
+      });
+      cache.set(url, {
+        status: "pending",
+        promise,
+      });
+      throw promise;
+    }
+    case "pending":
+      throw state.promise;
+    case "ready":
+      return state.data;
+    case "errored":
+      throw state.error;
   }
-  return [];
 };

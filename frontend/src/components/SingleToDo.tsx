@@ -3,6 +3,7 @@ import { ToDo } from "../model";
 import { AiFillEdit, AiFillDelete } from "react-icons/ai";
 import { MdDone } from "react-icons/md";
 import "./style.css";
+import { deleteApi } from "../api/delete";
 
 type Props = {
   toDo: ToDo;
@@ -21,6 +22,7 @@ const SingleToDo = ({ toDo, toDos, setToDos }: Props) => {
 
   const handleDelete = (id: number) => {
     setToDos(toDos.filter((todo) => todo.id !== id));
+    deleteApi(id);
   };
 
   const handleEdit = (id: number) => {
@@ -31,9 +33,9 @@ const SingleToDo = ({ toDo, toDos, setToDos }: Props) => {
   return (
     <form className="toDos__single">
       {toDo.isDone ? (
-        <span className="toDos__single--text">{toDo.toDo} </span>
+        <span className="toDos__single--text">{toDo.description}</span>
       ) : (
-        <span className="toDos__single--text">{toDo.toDo}</span>
+        <span className="toDos__single--text">{toDo.description}</span>
       )}
       <div>
         <span className="icon" onClick={() => handleEdit(toDo.id)}>
