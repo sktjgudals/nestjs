@@ -73,6 +73,7 @@
   font-size: 25px;
   cursor: pointer;
 }
+
 @media (max-width: 1200px) {
   .toDos__single {
     width: 40%;
