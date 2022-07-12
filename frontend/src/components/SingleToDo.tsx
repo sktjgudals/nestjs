@@ -20,9 +20,10 @@ const SingleToDo = ({ toDo, toDos, setToDos }: Props) => {
     );
   };
 
-  const handleDelete = (id: number) => {
-    setToDos(toDos.filter((todo) => todo.id !== id));
-    deleteApi(id);
+  const handleDelete = async (id: number) => {
+    const res = await deleteApi(id);
+    if (res) setToDos(toDos.filter((todo) => todo.id !== id));
+    else return console.warn("error");
   };
 
   const handleEdit = (id: number) => {
