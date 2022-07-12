@@ -1,9 +1,11 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Post,
+  Put,
   Query,
   Req,
   Res,
@@ -28,5 +30,11 @@ export class ToDoController {
     return res
       .status(200)
       .json(await this.toDoService.addToDo(body.description, body.isDone));
+  }
+
+  @Delete(':id')
+  async deleteToDo(@Param('id') id: any, @Res() res: Response) {
+    console.log(id);
+    return res.status(200).json('hi');
   }
 }
