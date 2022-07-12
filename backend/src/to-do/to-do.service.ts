@@ -26,4 +26,16 @@ export class ToDoService {
       if (e) return;
     }
   }
+
+  async deleteToDo(id: number): Promise<any> {
+    try {
+      const res = await this.prisma.list.delete({
+        where: { id },
+      });
+      if (res) return true;
+      else return false;
+    } catch (e) {
+      if (e) return false;
+    }
+  }
 }

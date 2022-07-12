@@ -33,8 +33,9 @@ export class ToDoController {
   }
 
   @Delete(':id')
-  async deleteToDo(@Param('id') id: any, @Res() res: Response) {
-    console.log(id);
-    return res.status(200).json('hi');
+  async deleteToDo(@Param('id') id: string, @Res() res: Response) {
+    const result = await this.toDoService.deleteToDo(parseInt(id));
+    if (result) return res.status(200).json(true);
+    else return res.status(400).json(false);
   }
 }
