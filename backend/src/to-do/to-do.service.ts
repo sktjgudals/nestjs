@@ -1,11 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { ToDoList } from './entities.ts/to-do.entitity';
-import { List } from '@prisma/client';
+import { ToDo } from './entities.ts/to-do.entitity';
+
 @Injectable()
 export class ToDoService {
   constructor(private prisma: PrismaService) {}
-  async addToDo(body, isDone): Promise<ToDoList> {
+
+  async addToDo(body, isDone): Promise<ToDo> {
     try {
       const create = await this.prisma.list.create({
         data: { description: body, isDone: isDone },
@@ -31,6 +32,19 @@ export class ToDoService {
     try {
       const res = await this.prisma.list.delete({
         where: { id },
+      });
+      if (res) return true;
+      else return false;
+    } catch (e) {
+      if (e) return false;
+    }
+  }
+
+  async updateToDo(id: number, body: ToDo) {
+    try {
+      const res = await this.prisma.list.update({
+        where: { id },
+        data: { description: body.description, isDone: body.isDone },
       });
       if (res) return true;
       else return false;

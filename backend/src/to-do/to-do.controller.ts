@@ -6,13 +6,12 @@ import {
   Param,
   Post,
   Put,
-  Query,
   Req,
   Res,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Request, Response } from 'express';
-import { ToDoList } from './entities.ts/to-do.entitity';
+import { ToDo } from './entities.ts/to-do.entitity';
 import { ToDoService } from './to-do.service';
 
 @Controller('to-do')
@@ -26,10 +25,20 @@ export class ToDoController {
   }
 
   @Post('')
-  async addToDo(@Body() body: ToDoList, @Res() res: Response) {
+  async addToDo(@Body() body: ToDo, @Res() res: Response) {
     return res
       .status(200)
       .json(await this.toDoService.addToDo(body.description, body.isDone));
+  }
+
+  @Put(':id')
+  async updateToDo(
+    @Param('id') id: string,
+    @Body() body: ToDo,
+    @Res() res: Response,
+  ) {
+    await this.toDoService.updateToDo(parseInt(id), body);
+    return res.status(200).json('hi');
   }
 
   @Delete(':id')
