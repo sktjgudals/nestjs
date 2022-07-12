@@ -37,14 +37,15 @@ export class ToDoController {
     @Body() body: ToDo,
     @Res() res: Response,
   ) {
-    await this.toDoService.updateToDo(parseInt(id), body);
-    return res.status(200).json('hi');
+    return res
+      .status(200)
+      .json(await this.toDoService.updateToDo(parseInt(id), body));
   }
 
   @Delete(':id')
   async deleteToDo(@Param('id') id: string, @Res() res: Response) {
-    const result = await this.toDoService.deleteToDo(parseInt(id));
-    if (result) return res.status(200).json(true);
-    else return res.status(400).json(false);
+    return res
+      .status(400)
+      .json(await this.toDoService.deleteToDo(parseInt(id)));
   }
 }
