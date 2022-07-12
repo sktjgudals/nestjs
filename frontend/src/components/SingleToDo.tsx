@@ -5,6 +5,7 @@ import { MdDone } from "react-icons/md";
 import "./style.css";
 import { deleteApi } from "../api/delete";
 import { useRef } from "react";
+import { updateApi } from "../api/update";
 
 type Props = {
   toDo: ToDo;
@@ -15,6 +16,7 @@ type Props = {
 const SingleToDo = ({ toDo, toDos, setToDos }: Props) => {
   const [edit, setEdit] = useState<boolean>(false);
   const [editToDo, setEditToDo] = useState<string>(toDo.description);
+
   const handleDone = (id: number) => {
     setToDos(
       toDos.map((todo) =>
@@ -22,13 +24,14 @@ const SingleToDo = ({ toDo, toDos, setToDos }: Props) => {
       )
     );
   };
+
   const handleDelete = async (id: number) => {
     const res = await deleteApi(id);
     if (res) setToDos(toDos.filter((todo) => todo.id !== id));
     else return console.warn("error");
   };
 
-  const handleEdit = (e: React.FormEvent, id: number) => {
+  const handleEdit = async (e: React.FormEvent, id: number) => {
     e.preventDefault();
     setToDos(
       toDos.map((toDo) =>
@@ -36,7 +39,9 @@ const SingleToDo = ({ toDo, toDos, setToDos }: Props) => {
       )
     );
     setEdit(!edit);
+    await updateApi(id, editToDo, toDo.isDone);
   };
+
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
