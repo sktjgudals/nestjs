@@ -45,7 +45,7 @@ export class ToDoController {
   @Delete(':id')
   async deleteToDo(@Param('id') id: string, @Res() res: Response) {
     return res
-      .status(400)
+      .status(200)
       .json(await this.toDoService.deleteToDo(parseInt(id)));
   }
 }
