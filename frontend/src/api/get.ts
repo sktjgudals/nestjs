@@ -16,7 +16,7 @@ export const useFetchAsync = (url: string) => {
           })
           .catch((error) => {
             cache.set(url, {
-              status: "errored",
+              status: "error",
               error,
             });
             reject(error);
@@ -32,7 +32,7 @@ export const useFetchAsync = (url: string) => {
       throw state.promise;
     case "ready":
       return state.data;
-    case "errored":
-      throw state.error;
+    case "error":
+      return null;
   }
 };

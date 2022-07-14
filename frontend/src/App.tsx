@@ -10,7 +10,7 @@ const App: React.FC = () => {
   const url = `http://localhost:4000/to-do/`;
   const data = useFetchAsync(url);
   const [toDo, setToDo] = useState<string>("");
-  const [toDos, setToDos] = useState<ToDo[]>(data);
+  const [toDos, setToDos] = useState<ToDo[]>(data ? data : []);
   const handleAdd = async (e: React.FormEvent) => {
     const isDone = false;
     e.preventDefault();
