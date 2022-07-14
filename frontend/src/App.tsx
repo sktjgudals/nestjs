@@ -11,6 +11,7 @@ const App: React.FC = () => {
   const data = useFetchAsync(url);
   const [toDo, setToDo] = useState<string>("");
   const [toDos, setToDos] = useState<ToDo[]>(data ? data : []);
+  const [completedToDos, setCompletedToDos] = useState<ToDo[]>([]);
   const handleAdd = async (e: React.FormEvent) => {
     const isDone = false;
     e.preventDefault();
@@ -29,7 +30,12 @@ const App: React.FC = () => {
     <div className="App">
       <span className="heading">ToDoList</span>
       <InputFeild toDo={toDo} setToDo={setToDo} handleAdd={handleAdd} />
-      <ToDoList toDos={toDos} setToDos={setToDos} />
+      <ToDoList
+        toDos={toDos}
+        setToDos={setToDos}
+        completedToDos={completedToDos}
+        setCompletedToDos={setCompletedToDos}
+      />
     </div>
   );
 };

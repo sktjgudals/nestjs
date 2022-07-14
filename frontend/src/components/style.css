@@ -56,6 +56,7 @@
   font-size: 30px;
   color: white;
 }
+
 .toDos {
   display: flex;
   width: 47.5%;
@@ -63,6 +64,7 @@
   padding: 15px;
   border-radius: 5px;
   background-color: rgb(50, 195, 205);
+  margin-right: 15px;
 }
 
 .toDos__single {
@@ -101,7 +103,12 @@
     width: 95%;
     margin-bottom: 10px;
   }
-  .toDos__single {
-    width: 100%;
+  .container {
+    width: 95%;
+    flex-direction: column;
   }
+}
+
+.remove {
+  background-color: red;
 }
