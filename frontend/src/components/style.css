@@ -75,10 +75,12 @@
   background-image: url("https://img.freepik.com/free-photo/crumpled-yellow-paper-background-close-up_60487-2390.jpg?size=626&ext=jpg");
   transition: 0.2s;
 }
+
 .toDos__single:hover {
   box-shadow: 0 0 5px black;
   transform: scale(1.03);
 }
+
 .toDos__single--text {
   flex: 1;
   overflow: hidden;
@@ -111,4 +113,16 @@
 
 .remove {
   background-color: red;
+}
+
+.dragactive {
+  background-color: rgb(0, 221, 236);
+}
+
+.dragcomplete {
+  background-color: rgb(255, 102, 78);
+}
+
+.drag {
+  box-shadow: 0 0 20px black;
 }
