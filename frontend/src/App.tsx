@@ -5,7 +5,7 @@ import ToDoList from "./components/ToDoList";
 import { ToDo } from "./model";
 import { addApi } from "./api/add";
 import { useFetchAsync } from "./api/get";
-import { DragDropContext } from "react-beautiful-dnd";
+import { DragDropContext, DropResult } from "react-beautiful-dnd";
 
 const App: React.FC = () => {
   const url = `http://localhost:4000/to-do/`;
@@ -27,8 +27,39 @@ const App: React.FC = () => {
     }
   };
 
+  const onDragEnd = (result: DropResult) => {
+    if (result) {
+      const { source, destination } = result;
+      if (destination && source) {
+        if (
+          destination.droppableId === source.droppableId &&
+          destination.index === source.index
+        )
+          return;
+        let add,
+          active = toDos,
+          complete = completedToDos;
+        if (source.droppableId === "ToDosList") {
+          add = active[source.index];
+          active.splice(source.index, 1);
+        } else {
+          add = complete[source.index];
+          complete.splice(source.index, 1);
+        }
+
+        if (destination.droppableId === "ToDosList") {
+          active.splice(destination.index, 0, add);
+        } else {
+          complete.splice(destination.index, 0, add);
+        }
+        setCompletedToDos(complete);
+        setToDos(active);
+      }
+    }
+  };
+
   return (
-    <DragDropContext onDragEnd={() => {}}>
+    <DragDropContext onDragEnd={onDragEnd}>
       <div className="App">
         <span className="heading">ToDoList</span>
         <InputFeild toDo={toDo} setToDo={setToDo} handleAdd={handleAdd} />
