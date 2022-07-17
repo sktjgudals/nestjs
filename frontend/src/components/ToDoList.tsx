@@ -1,4 +1,5 @@
 import React from "react";
+import { Droppable } from "react-beautiful-dnd";
 import { ToDo } from "../model";
 import SingleToDo from "./SingleToDo";
 import "./style.css";
@@ -18,30 +19,48 @@ const ToDoList: React.FC<Props> = ({
 }) => {
   return (
     <div className="container">
-      <div className="toDos">
-        <span className="toDos__heading">Active Tasks</span>
-        {toDos.map((toDo) => (
-          <SingleToDo
-            key={toDo.id}
-            toDo={toDo}
-            toDos={toDos}
-            setToDos={setToDos}
-          />
-        ))}
-      </div>
-      <div className="toDos remove">
-        {/* <div className="toDos"> */}
-        <span className=" toDos__heading">Completed Tasks</span>
-        {toDos.map((toDo) => (
-          <SingleToDo
-            key={toDo.id}
-            toDo={toDo}
-            toDos={toDos}
-            setToDos={setToDos}
-          />
-        ))}
-        {/* </div> */}
-      </div>
+      <Droppable droppableId="ToDosList">
+        {(provided) => (
+          <div
+            className="toDos"
+            ref={provided.innerRef}
+            {...provided.droppableProps}
+          >
+            <span className="toDos__heading">Active Tasks</span>
+            {toDos.map((toDo, index) => (
+              <SingleToDo
+                index={index}
+                key={toDo.id}
+                toDo={toDo}
+                toDos={toDos}
+                setToDos={setToDos}
+              />
+            ))}
+            {provided.placeholder}
+          </div>
+        )}
+      </Droppable>
+      <Droppable droppableId="ToDosRemove">
+        {(provided) => (
+          <div
+            className="toDos remove"
+            ref={provided.innerRef}
+            {...provided.droppableProps}
+          >
+            <span className=" toDos__heading">Completed Tasks</span>
+            {completedToDos.map((toDo, index) => (
+              <SingleToDo
+                index={index}
+                key={toDo.id}
+                toDo={toDo}
+                toDos={toDos}
+                setToDos={setCompletedToDos}
+              />
+            ))}
+            {provided.placeholder}
+          </div>
+        )}
+      </Droppable>
     </div>
   );
 };
