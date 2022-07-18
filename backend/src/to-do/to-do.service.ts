@@ -56,11 +56,10 @@ export class ToDoService {
   async isDoneUpdateToDo(body: ToDo) {
     try {
       const { id, isDone } = body;
-      const res = await this.prisma.list.update({
+      await this.prisma.list.update({
         where: { id },
         data: { isDone: isDone },
       });
-      console.log(res);
     } catch (e) {
       if (e) return false;
     }
