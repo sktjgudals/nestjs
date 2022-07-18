@@ -19,3 +19,23 @@ export const updateApi = async (
   }
   return 0;
 };
+
+export const isDoneUpdateApi = async (
+  id: number,
+  isDone: boolean
+): Promise<boolean> => {
+  try {
+    const url = `http://localhost:4000/to-do/isdone/`;
+    const urlOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ id, isDone }),
+    };
+    fetch(url, urlOptions);
+  } catch (e) {
+    if (e) return false;
+  }
+  return false;
+};

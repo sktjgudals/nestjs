@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./App.css";
 import InputFeild from "./components/InputFeild";
 import ToDoList from "./components/ToDoList";
 import { ToDo } from "./model";
 import { addApi } from "./api/add";
+import { isDoneUpdateApi } from "./api/update";
 import { useFetchAsync } from "./api/get";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
 
@@ -14,7 +15,7 @@ const App: React.FC = () => {
   const [toDos, setToDos] = useState<ToDo[]>(data ? data : []);
   const [completedToDos, setCompletedToDos] = useState<ToDo[]>([]);
 
-  const handleDone = (id: number, isDone: boolean) => {
+  const handleDone = async (id: number, isDone: boolean) => {
     if (!isDone) {
       const index = toDos.findIndex((toDo) => toDo.id === id);
       let add = toDos[index];
@@ -34,6 +35,7 @@ const App: React.FC = () => {
     setToDos(() => {
       return [...toDos];
     });
+    isDoneUpdateApi(id, !isDone);
   };
 
   const handleAdd = async (e: React.FormEvent) => {
