@@ -48,4 +48,9 @@ export class ToDoController {
       .status(200)
       .json(await this.toDoService.deleteToDo(parseInt(id)));
   }
+
+  @Post('/isdone')
+  async isDoneToDo(@Body() body: ToDo, @Res() res: Response) {
+    return res.status(200).json(await this.toDoService.isDoneUpdateToDo(body));
+  }
 }

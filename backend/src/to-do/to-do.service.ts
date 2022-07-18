@@ -52,4 +52,17 @@ export class ToDoService {
       if (e) return false;
     }
   }
+
+  async isDoneUpdateToDo(body: ToDo) {
+    try {
+      const { id, isDone } = body;
+      const res = await this.prisma.list.update({
+        where: { id },
+        data: { isDone: isDone },
+      });
+      console.log(res);
+    } catch (e) {
+      if (e) return false;
+    }
+  }
 }
