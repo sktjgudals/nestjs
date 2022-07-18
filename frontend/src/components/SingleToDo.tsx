@@ -61,9 +61,7 @@ const SingleToDo = ({ index, toDo, toDos, setToDos, handleDone }: Props) => {
               className="todos_single--text"
             />
           ) : toDo.isDone ? (
-            <span className="toDos__single--text">
-              {toDo.description} is done
-            </span>
+            <span className="toDos__single--text">{toDo.description} </span>
           ) : (
             <span className="toDos__single--text">{toDo.description}</span>
           )}
