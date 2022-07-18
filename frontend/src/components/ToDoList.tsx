@@ -9,6 +9,7 @@ interface Props {
   setToDos: React.Dispatch<React.SetStateAction<ToDo[]>>;
   completedToDos: ToDo[];
   setCompletedToDos: React.Dispatch<React.SetStateAction<ToDo[]>>;
+  handleDone: (id: number, isDone: boolean) => void;
 }
 
 const ToDoList: React.FC<Props> = ({
@@ -16,6 +17,7 @@ const ToDoList: React.FC<Props> = ({
   setToDos,
   completedToDos,
   setCompletedToDos,
+  handleDone,
 }) => {
   return (
     <div className="container">
@@ -34,6 +36,7 @@ const ToDoList: React.FC<Props> = ({
                 toDo={toDo}
                 toDos={toDos}
                 setToDos={setToDos}
+                handleDone={handleDone}
               />
             ))}
             {provided.placeholder}
@@ -57,6 +60,7 @@ const ToDoList: React.FC<Props> = ({
                 toDo={toDo}
                 toDos={toDos}
                 setToDos={setCompletedToDos}
+                handleDone={handleDone}
               />
             ))}
             {provided.placeholder}

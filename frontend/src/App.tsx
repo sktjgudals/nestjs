@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import InputFeild from "./components/InputFeild";
 import ToDoList from "./components/ToDoList";
@@ -13,9 +13,33 @@ const App: React.FC = () => {
   const [toDo, setToDo] = useState<string>("");
   const [toDos, setToDos] = useState<ToDo[]>(data ? data : []);
   const [completedToDos, setCompletedToDos] = useState<ToDo[]>([]);
+
+  const handleDone = (id: number, isDone: boolean) => {
+    if (!isDone) {
+      const index = toDos.findIndex((toDo) => toDo.id === id);
+      let add = toDos[index];
+      add.isDone = true;
+      toDos.splice(index, 1);
+      completedToDos.splice(index, 0, add);
+    } else {
+      const index = completedToDos.findIndex((toDo) => toDo.id === id);
+      let add = completedToDos[index];
+      add.isDone = false;
+      completedToDos.splice(index, 1);
+      toDos.splice(index, 0, add);
+    }
+    setCompletedToDos((prev) => {
+      return [...completedToDos];
+    });
+    setToDos(() => {
+      return [...toDos];
+    });
+  };
+
   const handleAdd = async (e: React.FormEvent) => {
     const isDone = false;
     e.preventDefault();
+
     if (toDo) {
       const res = await addApi(toDo, isDone);
       if (res !== 0) {
@@ -36,9 +60,11 @@ const App: React.FC = () => {
           destination.index === source.index
         )
           return;
+
         let add,
           active = toDos,
           complete = completedToDos;
+
         if (source.droppableId === "ToDosList") {
           add = active[source.index];
           active.splice(source.index, 1);
@@ -68,6 +94,7 @@ const App: React.FC = () => {
           setToDos={setToDos}
           completedToDos={completedToDos}
           setCompletedToDos={setCompletedToDos}
+          handleDone={handleDone}
         />
       </div>
     </DragDropContext>

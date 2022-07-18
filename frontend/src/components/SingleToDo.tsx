@@ -13,19 +13,12 @@ type Props = {
   toDo: ToDo;
   toDos: ToDo[];
   setToDos: React.Dispatch<React.SetStateAction<ToDo[]>>;
+  handleDone: (id: number, isDone: boolean) => void;
 };
 
-const SingleToDo = ({ index, toDo, toDos, setToDos }: Props) => {
+const SingleToDo = ({ index, toDo, toDos, setToDos, handleDone }: Props) => {
   const [edit, setEdit] = useState<boolean>(false);
   const [editToDo, setEditToDo] = useState<string>(toDo.description);
-
-  const handleDone = (id: number) => {
-    setToDos(
-      toDos.map((todo) =>
-        todo.id === id ? { ...toDo, isDone: !todo.isDone } : todo
-      )
-    );
-  };
 
   const handleDelete = async (id: number) => {
     const res = await deleteApi(id);
@@ -68,7 +61,9 @@ const SingleToDo = ({ index, toDo, toDos, setToDos }: Props) => {
               className="todos_single--text"
             />
           ) : toDo.isDone ? (
-            <span className="toDos__single--text">{toDo.description}</span>
+            <span className="toDos__single--text">
+              {toDo.description} is done
+            </span>
           ) : (
             <span className="toDos__single--text">{toDo.description}</span>
           )}
@@ -88,7 +83,10 @@ const SingleToDo = ({ index, toDo, toDos, setToDos }: Props) => {
             <span className="icon" onClick={() => handleDelete(toDo.id)}>
               <AiFillDelete />
             </span>
-            <span className="icon" onClick={() => handleDone(toDo.id)}>
+            <span
+              className="icon"
+              onClick={async () => await handleDone(toDo.id, toDo.isDone)}
+            >
               <MdDone />
             </span>
           </div>
