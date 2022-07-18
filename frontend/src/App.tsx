@@ -11,9 +11,15 @@ import { DragDropContext, DropResult } from "react-beautiful-dnd";
 const App: React.FC = () => {
   const url = `http://localhost:4000/to-do/`;
   const data = useFetchAsync(url);
+  const isDoneToDo = data.filter((todo: ToDo) => todo.isDone === true);
+  const notIsDoneToDo = data.filter((todo: ToDo) => todo.isDone === false);
   const [toDo, setToDo] = useState<string>("");
-  const [toDos, setToDos] = useState<ToDo[]>(data ? data : []);
-  const [completedToDos, setCompletedToDos] = useState<ToDo[]>([]);
+  const [toDos, setToDos] = useState<ToDo[]>(
+    notIsDoneToDo ? notIsDoneToDo : []
+  );
+  const [completedToDos, setCompletedToDos] = useState<ToDo[]>(
+    isDoneToDo ? isDoneToDo : []
+  );
 
   const handleDone = async (id: number, isDone: boolean) => {
     if (!isDone) {
@@ -69,9 +75,11 @@ const App: React.FC = () => {
 
         if (source.droppableId === "ToDosList") {
           add = active[source.index];
+          add.isDone = true;
           active.splice(source.index, 1);
         } else {
           add = complete[source.index];
+          add.isDone = false;
           complete.splice(source.index, 1);
         }
 
@@ -82,6 +90,7 @@ const App: React.FC = () => {
         }
         setCompletedToDos(complete);
         setToDos(active);
+        isDoneUpdateApi(add.id, add.isDone);
       }
     }
   };
