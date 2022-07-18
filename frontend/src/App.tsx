@@ -68,7 +68,6 @@ const App: React.FC = () => {
           destination.index === source.index
         )
           return;
-
         let add,
           active = toDos,
           complete = completedToDos;
@@ -76,10 +75,16 @@ const App: React.FC = () => {
         if (source.droppableId === "ToDosList") {
           add = active[source.index];
           add.isDone = true;
+          if (destination.droppableId !== source.droppableId) {
+            isDoneUpdateApi(add.id, add.isDone);
+          }
           active.splice(source.index, 1);
         } else {
           add = complete[source.index];
           add.isDone = false;
+          if (destination.droppableId !== source.droppableId) {
+            isDoneUpdateApi(add.id, add.isDone);
+          }
           complete.splice(source.index, 1);
         }
 
@@ -90,7 +95,6 @@ const App: React.FC = () => {
         }
         setCompletedToDos(complete);
         setToDos(active);
-        isDoneUpdateApi(add.id, add.isDone);
       }
     }
   };
