@@ -12,29 +12,54 @@ type Props = {
   index: number;
   toDo: ToDo;
   toDos: ToDo[];
+  completedToDos: ToDo[];
   setToDos: React.Dispatch<React.SetStateAction<ToDo[]>>;
+  setCompletedToDos: React.Dispatch<React.SetStateAction<ToDo[]>>;
   handleDone: (id: number, isDone: boolean) => void;
 };
 
-const SingleToDo = ({ index, toDo, toDos, setToDos, handleDone }: Props) => {
+const SingleToDo = ({
+  index,
+  toDo,
+  toDos,
+  setToDos,
+  handleDone,
+  setCompletedToDos,
+  completedToDos,
+}: Props) => {
   const [edit, setEdit] = useState<boolean>(false);
   const [editToDo, setEditToDo] = useState<string>(toDo.description);
 
   const handleDelete = async (id: number) => {
     const res = await deleteApi(id);
-    if (res) setToDos(toDos.filter((todo) => todo.id !== id));
-    else return console.warn("error");
+    if (res) {
+      if (toDo.isDone) {
+        setCompletedToDos(
+          completedToDos.filter((todo: ToDo) => todo.id !== id)
+        );
+      } else {
+        setToDos(toDos.filter((todo) => todo.id !== id));
+      }
+    } else return console.warn("error");
   };
 
   const handleEdit = async (e: React.FormEvent, id: number) => {
     e.preventDefault();
-    setToDos(
-      toDos.map((toDo) =>
-        toDo.id === id ? { ...toDo, description: editToDo } : toDo
-      )
-    );
-    setEdit(!edit);
     await updateApi(id, editToDo, toDo.isDone);
+    if (toDo.isDone) {
+      setCompletedToDos(
+        completedToDos.map((todo) =>
+          todo.id === id ? { ...toDo, description: editToDo } : todo
+        )
+      );
+    } else {
+      setToDos(
+        toDos.map((toDo) =>
+          toDo.id === id ? { ...toDo, description: editToDo } : toDo
+        )
+      );
+    }
+    setEdit(!edit);
   };
 
   const inputRef = useRef<HTMLInputElement>(null);
