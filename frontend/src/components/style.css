@@ -88,9 +88,6 @@
   border: none;
   font-size: 20px;
 }
-.toDos__single--text:focus {
-  outline: none;
-}
 
 .icon {
   margin-left: 15px;
