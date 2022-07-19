@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { ToDo } from "../model";
 import { AiFillEdit, AiFillDelete } from "react-icons/ai";
 import { MdDone } from "react-icons/md";
+import { IoCloseOutline } from "react-icons/io5";
 import "./style.css";
 import { deleteApi } from "../api/delete";
 import { useRef } from "react";
@@ -86,33 +87,56 @@ const SingleToDo = ({
               className="todos_single--text"
             />
           ) : toDo.isDone ? (
-            <span className="toDos__single--text">{toDo.description} </span>
+            <>
+              <span className="toDos__single--text">{toDo.description}</span>
+              <span
+                className="icon"
+                onClick={() => {
+                  if (!edit && !toDo.isDone) {
+                    setEdit(!edit);
+                  } else {
+                    setEdit(!edit);
+                  }
+                }}
+              >
+                <AiFillEdit />
+              </span>
+              <span className="icon" onClick={() => handleDelete(toDo.id)}>
+                <AiFillDelete />
+              </span>
+              <span
+                className="icon"
+                onClick={async () => await handleDone(toDo.id, toDo.isDone)}
+              >
+                <IoCloseOutline />
+              </span>
+            </>
           ) : (
-            <span className="toDos__single--text">{toDo.description}</span>
+            <>
+              <span className="toDos__single--text">{toDo.description}</span>
+              <span
+                className="icon"
+                onClick={() => {
+                  if (!edit && !toDo.isDone) {
+                    setEdit(!edit);
+                  } else {
+                    setEdit(!edit);
+                  }
+                }}
+              >
+                <AiFillEdit />
+              </span>
+              <span className="icon" onClick={() => handleDelete(toDo.id)}>
+                <AiFillDelete />
+              </span>
+              <span
+                className="icon"
+                onClick={async () => await handleDone(toDo.id, toDo.isDone)}
+              >
+                <MdDone />
+              </span>
+            </>
           )}
-          <div>
-            <span
-              className="icon"
-              onClick={() => {
-                if (!edit && !toDo.isDone) {
-                  setEdit(!edit);
-                } else {
-                  setEdit(!edit);
-                }
-              }}
-            >
-              <AiFillEdit />
-            </span>
-            <span className="icon" onClick={() => handleDelete(toDo.id)}>
-              <AiFillDelete />
-            </span>
-            <span
-              className="icon"
-              onClick={async () => await handleDone(toDo.id, toDo.isDone)}
-            >
-              <MdDone />
-            </span>
-          </div>
         </form>
       )}
     </Draggable>
