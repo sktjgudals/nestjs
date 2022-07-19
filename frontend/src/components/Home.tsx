@@ -7,6 +7,8 @@ import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import { isDoneUpdateApi } from "../api/update";
 import InputFeild from "./InputFeild";
 import ToDoList from "./ToDoList";
+import { Link } from "react-router-dom";
+import { FiAlignLeft } from "react-icons/fi";
 
 const Home: React.FC = () => {
   const url = `http://localhost:4000/to-do/`;
@@ -101,6 +103,12 @@ const Home: React.FC = () => {
 
   return (
     <>
+      <Link to="/" className="heading">
+        ToDoList
+      </Link>
+      <Link to="/daylist" className="icon_heading">
+        <FiAlignLeft />
+      </Link>
       <InputFeild toDo={toDo} setToDo={setToDo} handleAdd={handleAdd} />
       <DragDropContext onDragEnd={onDragEnd}>
         <ToDoList
