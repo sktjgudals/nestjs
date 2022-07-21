@@ -11,6 +11,7 @@ const DayList: React.FC = () => {
       <Link to="/daylist" className="heading">
         DayList
       </Link>
+      <div></div>
     </>
   );
 };
