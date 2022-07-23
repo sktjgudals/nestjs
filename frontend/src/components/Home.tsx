@@ -13,8 +13,14 @@ import { FiAlignLeft } from "react-icons/fi";
 const Home: React.FC = () => {
   const url = `http://localhost:4000/to-do/`;
   const data = useFetchAsync(url);
-  const isDoneToDo = data.filter((todo: ToDo) => todo.isDone === true);
-  const notIsDoneToDo = data.filter((todo: ToDo) => todo.isDone === false);
+  const isDoneToDo =
+    data.statusCode === 404
+      ? []
+      : data.filter((todo: ToDo) => todo.isDone === true);
+  const notIsDoneToDo =
+    data.statusCode === 404
+      ? []
+      : data.filter((todo: ToDo) => todo.isDone === false);
   const [toDo, setToDo] = useState<string>("");
   const [toDos, setToDos] = useState<ToDo[]>(
     notIsDoneToDo ? notIsDoneToDo : []
