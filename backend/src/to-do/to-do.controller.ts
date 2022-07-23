@@ -53,4 +53,9 @@ export class ToDoController {
   async isDoneToDo(@Body() body: ToDo, @Res() res: Response) {
     return res.status(200).json(await this.toDoService.isDoneUpdateToDo(body));
   }
+
+  @Get(':date')
+  async getToDoDate(@Param('date') date: string, @Res() res: Response) {
+    return res.status(200).json(await this.toDoService.getToDoDate(date));
+  }
 }
