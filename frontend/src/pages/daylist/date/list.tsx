@@ -1,17 +1,19 @@
 import React, { useState } from "react";
-import { ToDo } from "../model";
-import "./style.css";
-import { useFetchAsync } from "../api/get";
-import { addApi } from "../api/add";
+import { ToDo } from "../../../model";
+import "../../../components/style.css";
+import InputFeild from "../../../components/InputFeild";
+import ToDoList from "../../../components/ToDoList";
+import { addApi } from "../../../api/add";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
-import { isDoneUpdateApi } from "../api/update";
-import InputFeild from "./InputFeild";
-import ToDoList from "./ToDoList";
-import { Link } from "react-router-dom";
-import { FiAlignLeft } from "react-icons/fi";
+import { isDoneUpdateApi } from "../../../api/update";
+import { useFetchAsync } from "../../../api/get";
 
-const Home: React.FC = () => {
-  const url = `http://localhost:4000/to-do/`;
+interface Props {
+  location: string;
+}
+
+const List: React.FC<Props> = ({ location }) => {
+  const url = `http://localhost:4000/to-do/${location}`;
   const data = useFetchAsync(url);
   const isDoneToDo =
     data.statusCode === 404
@@ -109,12 +111,6 @@ const Home: React.FC = () => {
 
   return (
     <>
-      <Link to="/" className="heading">
-        All ToDoList
-      </Link>
-      <Link to="/daylist" className="icon_heading">
-        <FiAlignLeft />
-      </Link>
       <InputFeild toDo={toDo} setToDo={setToDo} handleAdd={handleAdd} />
       <DragDropContext onDragEnd={onDragEnd}>
         <ToDoList
@@ -129,4 +125,4 @@ const Home: React.FC = () => {
   );
 };
 
-export default Home;
+export default List;

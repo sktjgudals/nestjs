@@ -4,8 +4,8 @@ export const useFetchAsync = (url: string) => {
   const state = cache.get(url);
   switch (state?.status) {
     case undefined: {
-      const promise = new Promise((resolve, reject) => {
-        fetch(url)
+      const promise = new Promise(async (resolve, reject) => {
+        await fetch(url)
           .then((res) => res.json())
           .then((data) => {
             cache.set(url, {
