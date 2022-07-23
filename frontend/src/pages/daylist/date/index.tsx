@@ -1,23 +1,23 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { FiAlignLeft } from "react-icons/fi";
 import { Link, useLocation } from "react-router-dom";
+import Header from "../../../components/Header";
 import "../../../components/style.css";
-import List from "./list";
+import List from "../../../components/List";
 
 const Date: React.FC = () => {
   const location = useLocation().pathname.split("daylist/")[1];
-  useEffect(() => {
-    document.title = `To Do List At ${location}`;
-  }, [location]);
-
+  const url = `http://localhost:4000/to-do/${location}`;
   return (
     <>
+      <Header
+        title={`To Do List at ${location}`}
+        path={`/daylist/${location}`}
+      />
       <Link to="/daylist" className="icon_heading">
         <FiAlignLeft />
       </Link>
-      <div className="heading"> To Do List at {location}</div>
-
-      <List location={location} />
+      <List url={url} />
     </>
   );
 };

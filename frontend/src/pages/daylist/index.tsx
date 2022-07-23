@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback } from "react";
 import { FiAlignLeft } from "react-icons/fi";
 import { Link, useNavigate } from "react-router-dom";
 import { Calendar } from "react-date-range";
@@ -6,11 +6,9 @@ import ko from "date-fns/locale/ko";
 // import moment from "moment";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
+import Header from "../../components/Header";
 
 const DayList: React.FC = () => {
-  useEffect(() => {
-    document.title = `Day List`;
-  }, []);
   const nav = useNavigate();
   // const tomorrow = moment().add(1, "d").toDate();
   const onChangeDate = useCallback((date: Date): void | undefined => {
@@ -23,11 +21,9 @@ const DayList: React.FC = () => {
   }, []);
   return (
     <>
+      <Header path={`/daylist`} title={`Day List`} />
       <Link to="/" className="icon_heading">
         <FiAlignLeft />
-      </Link>
-      <Link to="/daylist" className="heading">
-        DayList
       </Link>
       <Calendar
         locale={ko}

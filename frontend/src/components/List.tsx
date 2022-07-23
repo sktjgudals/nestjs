@@ -1,19 +1,18 @@
 import React, { useState } from "react";
-import { ToDo } from "../../../model";
-import "../../../components/style.css";
-import InputFeild from "../../../components/InputFeild";
-import ToDoList from "../../../components/ToDoList";
-import { addApi } from "../../../api/add";
+import { ToDo } from "../model";
+import "./style.css";
+import InputFeild from "./InputFeild";
+import ToDoList from "./ToDoList";
+import { addApi } from "../api/add";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
-import { isDoneUpdateApi } from "../../../api/update";
-import { useFetchAsync } from "../../../api/get";
+import { isDoneUpdateApi } from "../api/update";
+import { useFetchAsync } from "../api/get";
 
 interface Props {
-  location: string;
+  url: string;
 }
 
-const List: React.FC<Props> = ({ location }) => {
-  const url = `http://localhost:4000/to-do/${location}`;
+const List: React.FC<Props> = ({ url }) => {
   const data = useFetchAsync(url);
   const isDoneToDo =
     data.statusCode === 404
