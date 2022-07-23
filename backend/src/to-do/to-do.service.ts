@@ -67,6 +67,7 @@ export class ToDoService {
 
   async getToDoDate(date: string) {
     try {
+      console.log(date);
       const list = await this.prisma.list.findMany({});
       if (list) return list;
     } catch (e) {
