@@ -16,7 +16,7 @@ const DayList: React.FC = () => {
     if (!date) {
       return;
     } // 날짜값이 없을 때 예외처리
-    nav(`/daylist/${moment(date).format().split("T")[0]}`);
+    nav(`/daylist/${moment(date).format()}`);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (

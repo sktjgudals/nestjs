@@ -11,8 +11,8 @@ const Date: React.FC = () => {
   return (
     <>
       <Header
-        title={`To Do List at ${location}`}
-        path={`/daylist/${location}`}
+        title={`To Do List at ${location.split("T")[0]}`}
+        path={`/daylist/${location.split("T")[0]}`}
       />
       <Link to="/daylist" className="icon_heading">
         <FiAlignLeft />
