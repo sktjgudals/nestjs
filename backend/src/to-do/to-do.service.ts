@@ -67,8 +67,22 @@ export class ToDoService {
 
   async getToDoDate(date: string) {
     try {
-      console.log(date);
-      const list = await this.prisma.list.findMany({});
+      const list = await this.prisma.list.findMany({
+        where: {
+          createdAt: {
+            gte: new Date(
+              new Date(
+                new Date().setDate(new Date(date).getDate() + 1),
+              ).toLocaleDateString(),
+            ),
+            lt: new Date(
+              new Date(
+                new Date().setDate(new Date(date).getDate() + 2),
+              ).toLocaleDateString(),
+            ),
+          },
+        },
+      });
       if (list) return list;
     } catch (e) {
       if (e) return false;
