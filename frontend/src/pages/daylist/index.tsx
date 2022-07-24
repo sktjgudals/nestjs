@@ -3,7 +3,7 @@ import { FiAlignLeft } from "react-icons/fi";
 import { Link, useNavigate } from "react-router-dom";
 import { Calendar } from "react-date-range";
 import ko from "date-fns/locale/ko";
-// import moment from "moment";
+import moment from "moment";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import Header from "../../components/Header";
@@ -16,7 +16,7 @@ const DayList: React.FC = () => {
     if (!date) {
       return;
     } // 날짜값이 없을 때 예외처리
-    nav(`/daylist/${date.toISOString().split("T")[0]}`);
+    nav(`/daylist/${moment(date).format().split("T")[0]}`);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
