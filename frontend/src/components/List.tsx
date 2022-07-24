@@ -10,9 +10,10 @@ import { useFetchAsync } from "../api/get";
 
 interface Props {
   url: string;
+  inputCheck?: boolean;
 }
 
-const List: React.FC<Props> = ({ url }) => {
+const List: React.FC<Props> = ({ url, inputCheck }) => {
   const data = useFetchAsync(url);
   const isDoneToDo =
     data.statusCode === 404
@@ -107,19 +108,34 @@ const List: React.FC<Props> = ({ url }) => {
       }
     }
   };
-
   return (
     <>
-      <InputFeild toDo={toDo} setToDo={setToDo} handleAdd={handleAdd} />
-      <DragDropContext onDragEnd={onDragEnd}>
-        <ToDoList
-          toDos={toDos}
-          setToDos={setToDos}
-          completedToDos={completedToDos}
-          setCompletedToDos={setCompletedToDos}
-          handleDone={handleDone}
-        />
-      </DragDropContext>
+      {inputCheck ? (
+        <>
+          <DragDropContext onDragEnd={onDragEnd}>
+            <ToDoList
+              toDos={toDos}
+              setToDos={setToDos}
+              completedToDos={completedToDos}
+              setCompletedToDos={setCompletedToDos}
+              handleDone={handleDone}
+            />
+          </DragDropContext>
+        </>
+      ) : (
+        <>
+          <InputFeild toDo={toDo} setToDo={setToDo} handleAdd={handleAdd} />
+          <DragDropContext onDragEnd={onDragEnd}>
+            <ToDoList
+              toDos={toDos}
+              setToDos={setToDos}
+              completedToDos={completedToDos}
+              setCompletedToDos={setCompletedToDos}
+              handleDone={handleDone}
+            />
+          </DragDropContext>
+        </>
+      )}
     </>
   );
 };
