@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { ToDo } from './entities.ts/to-do.entitity';
-
+import moment from 'moment';
 @Injectable()
 export class ToDoService {
   constructor(private prisma: PrismaService) {}
@@ -66,20 +66,14 @@ export class ToDoService {
   }
 
   async getToDoDate(date: string) {
+    const startDay = moment(date).startOf('day').format();
+    const endDay = moment(date).endOf('day').format();
     try {
       const list = await this.prisma.list.findMany({
         where: {
           createdAt: {
-            gte: new Date(
-              new Date(
-                new Date().setDate(new Date(date).getDate() + 1),
-              ).toLocaleDateString(),
-            ),
-            lt: new Date(
-              new Date(
-                new Date().setDate(new Date(date).getDate() + 2),
-              ).toLocaleDateString(),
-            ),
+            gte: startDay,
+            lte: endDay,
           },
         },
       });
