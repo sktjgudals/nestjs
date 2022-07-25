@@ -2,20 +2,24 @@ import {
   Body,
   Controller,
   Delete,
+  ForbiddenException,
   Get,
   Param,
   Post,
   Put,
   Req,
   Res,
+  UseFilters,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Request, Response } from 'express';
+import { HttpExceptionFilter } from 'src/error/http-exception.filter';
 import { ToDo } from './entities.ts/to-do.entitity';
 import { ToDoService } from './to-do.service';
 
 @Controller('to-do')
 @ApiTags('To-Do API')
+@UseFilters(new HttpExceptionFilter())
 export class ToDoController {
   constructor(private readonly toDoService: ToDoService) {}
 
