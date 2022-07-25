@@ -60,7 +60,7 @@ const List: React.FC<Props> = ({ url, inputCheck }) => {
 
     if (toDo) {
       const res = await addApi(toDo, isDone);
-      if (res !== 0) {
+      if (res !== -1) {
         setToDos([...toDos, { id: res, description: toDo, isDone }]);
         setToDo("");
       } else {

@@ -12,9 +12,9 @@ export const addApi = async (
     const res = await fetch(url, urlOptions);
     const result = await res.json();
     if (result) return result.id;
-    else return 0;
+    else return -1;
   } catch (e) {
-    if (e) return 0;
+    if (e) return -1;
   }
-  return 0;
+  return -1;
 };
