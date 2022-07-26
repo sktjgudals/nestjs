@@ -63,8 +63,9 @@
   flex-direction: column;
   padding: 15px;
   border-radius: 5px;
-  background-color: rgb(50, 195, 205);
+  /* background-color: rgb(50, 195, 205); */
   margin-right: 15px;
+  border: 1px solid rgb(165, 165, 165);
 }
 
 .toDos__single {
@@ -72,7 +73,8 @@
   border-radius: 5px;
   padding: 20px;
   margin-top: 15px;
-  background-image: url("https://img.freepik.com/free-photo/crumpled-yellow-paper-background-close-up_60487-2390.jpg?size=626&ext=jpg");
+  /* background-image: url("https://img.freepik.com/free-photo/crumpled-yellow-paper-background-close-up_60487-2390.jpg?size=626&ext=jpg"); */
+  background-color: gray;
   transition: 0.2s;
 }
 
@@ -117,7 +119,7 @@
 }
 
 .remove {
-  background-color: red;
+  /* background-color: rgb(150, 97, 97); */
 }
 
 .dragactive {
