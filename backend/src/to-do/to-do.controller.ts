@@ -49,6 +49,17 @@ export class ToDoController {
 
   @Delete(':id')
   async deleteToDo(@Param('id') id: string, @Res() res: Response) {
+    function a() {
+      setTimeout(() => {
+        console.log('hi');
+      }, 300);
+    }
+    function b() {
+      setTimeout(() => {
+        'hey';
+      }, 600);
+    }
+    await Promise.all([a, b]);
     return res
       .status(200)
       .json(await this.toDoService.deleteToDo(parseInt(id)));
