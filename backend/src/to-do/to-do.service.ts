@@ -7,11 +7,17 @@ export class ToDoService {
   constructor(private prisma: PrismaService) {}
 
   async addToDo(body, isDone): Promise<ToDo> {
-    if (body) {
-      const create = await this.prisma.list.create({
-        data: { description: body, isDone: isDone },
-      });
-      if (create) return create;
+    try {
+      if (body) {
+        const create = await this.prisma.list.create({
+          data: { description: body, isDone: isDone },
+        });
+        if (create) return create;
+      } else {
+        throw new Error('error add ToDo');
+      }
+    } catch (e) {
+      if (e) throw new Error(' db error');
     }
   }
 
