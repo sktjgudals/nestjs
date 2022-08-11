@@ -69,20 +69,24 @@ export class ToDoService {
   }
 
   async getToDoDate(date: string) {
-    const startDay = moment(date).startOf('day').format();
-    const endDay = moment(date).endOf('day').format();
-    try {
-      const list = await this.prisma.list.findMany({
-        where: {
-          createdAt: {
-            gte: startDay,
-            lte: endDay,
+    if (date) {
+      const startDay = moment(date).startOf('day').format();
+      const endDay = moment(date).endOf('day').format();
+      try {
+        const list = await this.prisma.list.findMany({
+          where: {
+            createdAt: {
+              gte: startDay,
+              lte: endDay,
+            },
           },
-        },
-      });
-      if (list) return list;
-    } catch (e) {
-      if (e) return false;
+        });
+        if (list) return list;
+      } catch (e) {
+        if (e) return false;
+      }
+    } else {
+      throw new Error('not in date');
     }
   }
 }
