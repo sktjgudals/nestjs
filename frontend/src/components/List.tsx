@@ -14,6 +14,7 @@ interface Props {
 }
 
 const List: React.FC<Props> = ({ url, inputCheck }) => {
+  console.log("heloo");
   const data = useFetchAsync(url);
   const isDoneToDo =
     data.statusCode === 404
