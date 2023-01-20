@@ -37,13 +37,33 @@ const Home: React.FC = () => {
     localStorage.removeItem("access_token");
     window.location.href = "/";
   };
-  console.log(session);
+
+  const apiHandler = async () => {
+    const data = await fetch("http://localhost:4000/user/email/check", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email: "test@naver.com" }),
+    }).then((res) => {
+      return res.json();
+    });
+    console.log(data);
+  };
+
   return (
     <>
       <Header path={"/"} title={`All ToDoList`} />
       <Link to="/daylist" className="icon_heading">
         <FiAlignLeft />
       </Link>
+      <button
+        onClick={() => {
+          apiHandler();
+        }}
+      >
+        중복확인
+      </button>
       {session ? (
         <div>
           <div className={`toDos__single`}>안녕하세요 {session.email} 님 </div>

@@ -3,7 +3,6 @@ import { Injectable } from '@nestjs/common';
 import axios, { AxiosResponse } from 'axios';
 import { Request, Response } from 'express';
 import { JwtService } from '@nestjs/jwt';
-import { prisma } from '@prisma/client';
 
 const oauth2Client = new google.auth.OAuth2(
   process.env.GOOGLE_CLIENT_ID,
