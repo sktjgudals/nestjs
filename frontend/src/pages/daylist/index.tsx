@@ -1,39 +1,70 @@
-import React, { useCallback } from "react";
-import { FiAlignLeft } from "react-icons/fi";
-import { Link, useNavigate } from "react-router-dom";
-import { Calendar } from "react-date-range";
-import ko from "date-fns/locale/ko";
-import moment from "moment";
-import "react-date-range/dist/styles.css";
-import "react-date-range/dist/theme/default.css";
-import Header from "../../components/Header";
+import React, { useState, useEffect } from "react";
 
-const DayList: React.FC = () => {
-  const nav = useNavigate();
-  // const tomorrow = moment().add(1, "d").toDate();
-  const onChangeDate = useCallback((date: Date): void | undefined => {
-    // date 변경값을 받아오는 함수
-    if (!date) {
-      return;
-    } // 날짜값이 없을 때 예외처리
-    nav(`/daylist/${moment(date).format()}`);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+function App() {
+  useEffect(() => {
+    handleTokenFromQueryParams();
   }, []);
-  return (
-    <>
-      <Header path={`/daylist`} title={`Day List`} />
-      <Link to="/" className="icon_heading">
-        <FiAlignLeft />
-      </Link>
-      <Calendar
-        locale={ko}
-        // maxDate={tomorrow} // 최대날짜값 내일이면 내일부터 선택가능하다.
-        // date={date}
-        onChange={onChangeDate}
-        // dateDisplayFormat={"yyyy.mm.dd"}
-      />
-    </>
-  );
-};
 
-export default DayList;
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const createGoogleAuthLink = async () => {
+    try {
+      const request = await fetch("http://localhost:4000/createAuthLink", {
+        method: "POST",
+      });
+      const response = await request.json();
+      window.location.href = response.url;
+    } catch (error: any) {
+      console.log("App.js 12 | error", error);
+      throw new Error("Issue with Login", error.message);
+    }
+  };
+
+  const handleTokenFromQueryParams = () => {
+    const query = new URLSearchParams(window.location.search);
+    const accessToken = query.get("accessToken");
+    const refreshToken = query.get("refreshToken");
+    const expirationDate = newExpirationDate();
+    console.log("App.js 30 | expiration Date", expirationDate);
+    if (accessToken && refreshToken) {
+      storeTokenData(accessToken, refreshToken, expirationDate);
+      setIsLoggedIn(true);
+    }
+  };
+
+  const newExpirationDate = () => {
+    var expiration = new Date();
+    expiration.setHours(expiration.getHours() + 1);
+    return expiration;
+  };
+
+  const storeTokenData = async (
+    token: any,
+    refreshToken: any,
+    expirationDate: any
+  ) => {
+    sessionStorage.setItem("accessToken", token);
+    sessionStorage.setItem("refreshToken", refreshToken);
+    sessionStorage.setItem("expirationDate", expirationDate);
+  };
+
+  const signOut = () => {
+    setIsLoggedIn(false);
+    sessionStorage.clear();
+  };
+
+  return (
+    <div className="App">
+      <h1>Google</h1>
+      {!isLoggedIn ? (
+        <button onClick={createGoogleAuthLink}>Login</button>
+      ) : (
+        <>
+          <button onClick={signOut}>Sign Out</button>
+        </>
+      )}
+    </div>
+  );
+}
+
+export default App;

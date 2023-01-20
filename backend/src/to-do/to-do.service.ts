@@ -24,7 +24,7 @@ export class ToDoService {
   async getToDoAll(): Promise<any> {
     try {
       const list = await this.prisma.list.findMany();
-      if (list) return list;
+      if (list) return { list: list };
       else return;
     } catch (e) {
       if (e) return;
